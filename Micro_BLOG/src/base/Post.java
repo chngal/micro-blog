@@ -53,5 +53,11 @@ public class Post {
 		
 		return hashCode;
 		
+		
+	}
+	public boolean contains(String keyword){
+		
+		return  ;
+		
 	}
 }
