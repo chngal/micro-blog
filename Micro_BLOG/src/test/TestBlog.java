@@ -33,15 +33,19 @@ public class TestBlog {
 			else if(prompt.startsWith("post")){
 				//get content from the prompt
 				//get date from the prompt
-				String content = "";
-				Date date = null;
+				String content = prompt.substring(5);
+				
+				Date date = new Date();
+				//System.out.println(date.toString());
 				//
 				Post post = new Post(date, content);
+				//System.out.println(post.getContent());
 				myblog.post(post);
 			}
 			else if(prompt.startsWith("delete")){
 				//get index from the prompt
-				int index =0;
+				String content = prompt.substring(7);
+				int index = Integer.parseInt(content);
 				//
 				myblog.delete(index);
 			}

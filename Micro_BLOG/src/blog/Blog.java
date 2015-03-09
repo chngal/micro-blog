@@ -3,12 +3,14 @@ package blog;
 import base.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 public class Blog {
 	private User user;
 	private ArrayList<Post> allPosts;
 	
 	public Blog(User user){
 		this.user = user;
+		allPosts = new ArrayList<Post>();
 	}
 	
 	public void setUser(User user){
@@ -19,23 +21,29 @@ public class Blog {
 		return user;
 	}
 	
+	public void setPosts(ArrayList<Post> p ){
+		allPosts = p;
+	}
 	public void post(Post p){
-		allPosts.add(p);
-		System.out.println("succeed to add a post " + p.toString());
+		
+		//System.out.println(this.allPosts.size());
+		this.allPosts.add(p);
+		System.out.println("A new Post: "+'\n' + p.toString());
 	}
 	
 	public void list(){
+		System.out.println("Current posts: " +'\n');
 		for(int i = 0 ; i<allPosts.size();i++){
-			System.out.println(allPosts.get(i).toString());
+			System.out.println("Post["+ (i+1) +"]: "+ allPosts.get(i).toString());
 		}
 	}
 	
 	public void delete (int index){
-		if(index<0 || index>= allPosts.size()){
-			System.out.println(" The index should be neither too high nor negative");
+		if(index<=0 || index> allPosts.size()){
+			System.out.println("Illegal deletion.");
 		}
 		else{
-			allPosts.remove(index);
+			allPosts.remove(index-1);
 		}
 	}
 	
@@ -78,6 +86,21 @@ public class Blog {
 		//		for(int i =0; i<allPosts.size();i++){
 		//			allPosts.equals(o);
 		//		}
+	}
+	
+	public void search(int month, String someone){
+		Calendar cal = Calendar.getInstance();
+		
+		for(Post p:allPosts){
+			cal.setTime(p.getDate());
+			int postMonth = cal.get(Calendar.MONTH);
+			
+			if((month-1) == postMonth){
+				if(p.contains(someone)){
+					System.out.println(p.toString());
+				}
+			}
+		}
 	}
 	
 }

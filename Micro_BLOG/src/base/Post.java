@@ -2,7 +2,8 @@ package base;
 
 import java.util.Date;
 import java.lang.Object;
-public class Post {
+public class Post implements Comparable<Post> {
+	
 	private Date date;
 	private String content;
 	
@@ -18,11 +19,17 @@ public class Post {
 	public void setContent(String content){
 		this.content = content;
 	}
+	public Date getDate(){
+		return this.date;
+	}
+	public void setDate(Date date){
+		this.date = date;
+	}
 	
 	public String toString(){
 		String temp;
 		temp = this.date.toString();
-		temp = temp + ' ' + content;
+		temp = temp + '\n' + content;
 		return temp;
 	}
 	
@@ -57,7 +64,13 @@ public class Post {
 	}
 	public boolean contains(String keyword){
 		
-		return  ;
+		return content.contains(keyword) ;
 		
+	}
+	
+	@Override
+	public int compareTo(Post p) {
+		// TODO Auto-generated method stub
+		return this.date.compareTo(p.date);
 	}
 }
