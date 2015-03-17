@@ -124,13 +124,26 @@ public class Blog implements Serializable{
 	public void load(String filepath){
 		try {
 			ObjectInputStream is = new ObjectInputStream(new FileInputStream(filepath));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				Blog blog = (Blog) is.readObject();
+				this.allPosts = blog.allPosts;
+				this.user = blog.user;
+				is.close();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				is.close();
+			}
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Wait! There is something wrong. I cannot find the file..");
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
 		
 	}
 	
