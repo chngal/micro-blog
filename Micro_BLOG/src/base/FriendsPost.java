@@ -10,4 +10,5 @@ public class FriendsPost extends Post {
 		this.friend = friend;
 		
 	}
+	
 }

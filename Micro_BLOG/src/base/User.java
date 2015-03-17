@@ -1,6 +1,8 @@
 package base;
 
-public class User implements Comparable<User> {
+import java.io.Serializable;
+
+public class User implements Comparable<User>, Serializable {
 	
 	private int id;
 	private String name;
@@ -12,22 +14,22 @@ public class User implements Comparable<User> {
 		this.email = email;
 	}
 	
-	public int getId(){
+	public int getUserId(){
 		return id;
 	}
 	
-	public String getName(){
+	public String getUserName(){
 		return name;
 	}
 	
-	public String getEmail(){
+	public String getUserEmail(){
 		return email;
 	}
 	
 	@Override
 	public String toString() {
 		String temp;
-		temp = this.getId() + " " + ' ' + this.name + ' ' + this.email;
+		temp = this.getUserId() + " " + ' ' + this.name + ' ' + this.email;
 		return temp;
 	}
 

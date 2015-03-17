@@ -2,9 +2,10 @@ package blog;
 
 import base.*;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-public class Blog {
+public class Blog implements Serializable{
 	private User user;
 	private ArrayList<Post> allPosts;
 	
@@ -101,6 +102,36 @@ public class Blog {
 				}
 			}
 		}
+	}
+	
+	public void save(String filepath){
+		
+			ObjectOutputStream os;
+			try {
+				os = new ObjectOutputStream(new FileOutputStream(filepath));
+				os.writeObject(this);
+				os.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	
+
+		
+	}
+	
+	public void load(String filepath){
+		try {
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream(filepath));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 }
