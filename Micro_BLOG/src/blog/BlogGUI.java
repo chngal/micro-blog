@@ -1,12 +1,17 @@
 package blog;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.*;
+
+import base.Post;
+import base.User;
 
 
 public class BlogGUI implements ActionListener {
@@ -16,18 +21,43 @@ public class BlogGUI implements ActionListener {
 	private JTextField postContent;
 	private JButton refresh;
 	private JButton post;
+	private Blog myBlog = new Blog(new User(1,"2","3"));
 	
 	final int maxOfText = 140;
 	
 	public BlogGUI(){}
 	
+	class postListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+
+			String content = postTextArea.getText();
+			if(content == null){return;}
+			if(content.length()>140){
+				System.out.println("The text is exceed 140");
+				return;
+			}
+			Post post = new Post(new Date(), content);
+			myBlog.post(post);
+			
+		}
+
+	}
+	class refreshListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			
+			//postContent.add(myBlog.list());
+			
+		}
+	}
 	public void setWindow(){
 		mainFrame = new JFrame("Micro Blog Demo");
 		postTextArea = new JTextArea();
 		postContent = new JTextField();
 		refresh = new JButton("Refresh");
+		refresh.setBackground(new Color(176, 196, 222));
 		post = new JButton("Post");
-		post.addActionListener(this);
+		post.setBackground(new Color(135, 206, 250));
+		post.addActionListener(new postListener());
 		refresh.addActionListener(this);
 		JPanel top = new JPanel();
 		//top.setBorder(new  );
