@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Date;
 
 import javax.swing.*;
@@ -17,11 +19,12 @@ import base.User;
 public class BlogGUI implements ActionListener {
 
 	private JFrame mainFrame;
-	private JTextArea postTextArea;
-	private JTextField postContent;
+	private JTextArea postTextArea, postContent;
+	//private JTextField postContent;
 	private JButton refresh;
 	private JButton post;
-	private Blog myBlog = new Blog(new User(1,"2","3"));
+	private JLabel textLabel;
+	private Blog myBlog = new Blog(new User(1, "COMP3021", "COMP3021@cse.ust.hk"));
 	
 	final int maxOfText = 140;
 	
@@ -33,32 +36,65 @@ public class BlogGUI implements ActionListener {
 			String content = postTextArea.getText();
 			if(content == null){return;}
 			if(content.length()>140){
-				System.out.println("The text is exceed 140");
+				postContent.setText("The text is exceed 140");
+				postTextArea.setText("");
 				return;
 			}
 			Post post = new Post(new Date(), content);
 			myBlog.post(post);
+			postContent.setText("One post added");
+			postTextArea.setText("");
+//			String savefilepath="C:/"+myBlog.getUser().getUserName()+".blog";
+//			myBlog.save(savefilepath);
 			
 		}
 
 	}
 	class refreshListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+//			String loadfilepath="C:/"+myBlog.getUser().getUserName()+".blog";
+//			myBlog.load(loadfilepath);
+			postContent.setText(myBlog.toString());
 			
-			//postContent.add(myBlog.list());
 			
 		}
 	}
+	class lengthListener implements KeyListener{
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			updateTextLength();
+		}
+		
+	}
 	public void setWindow(){
 		mainFrame = new JFrame("Micro Blog Demo");
-		postTextArea = new JTextArea();
-		postContent = new JTextField();
+		postTextArea = new JTextArea(1,140);
+		postTextArea.setBackground(new Color(255,255,204));
+		postTextArea.setLineWrap(true);
+		postTextArea.addKeyListener(new lengthListener());
+		postContent = new JTextArea("This is my Blog");
+		postContent.setBackground(new Color(240,240,240));
+		postContent.setLineWrap(true);
+		postContent.setEditable(false);
 		refresh = new JButton("Refresh");
 		refresh.setBackground(new Color(176, 196, 222));
 		post = new JButton("Post");
 		post.setBackground(new Color(135, 206, 250));
 		post.addActionListener(new postListener());
-		refresh.addActionListener(this);
+		refresh.addActionListener(new refreshListener());
 		JPanel top = new JPanel();
 		//top.setBorder(new  );
 		top.setLayout(new BorderLayout());
@@ -67,7 +103,7 @@ public class BlogGUI implements ActionListener {
 		mainFrame.setSize(600, 600);
 		mainFrame.setLayout(new GridLayout(0,1));
 		
-		JLabel textLabel = new JLabel("You can still input " + maxOfText + " Character");
+		textLabel = new JLabel("You can still input " + maxOfText + " Character");
 		top.add(textLabel, BorderLayout.NORTH);
 		//postTextArea.setSize(40, 40);
 		top.add(postTextArea, BorderLayout.CENTER);
@@ -97,14 +133,21 @@ public class BlogGUI implements ActionListener {
 		blogGUi.setWindow();
 	}
 	
+	
+	public void updateTextLength() {
+		int lengthOftext = postTextArea.getText().length();
+		if(lengthOftext > 140){
+			textLabel.setText("Your post length has exceeded 140 words!");
+		}
+		else{
+			textLabel.setText("You can still input " +( maxOfText- lengthOftext) + " Character");
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == post){
-			postContent.setText("Post");
-		}
-		if(e.getSource() == refresh)
-			postContent.setText("Refresh");
 		
 	}
+
 }

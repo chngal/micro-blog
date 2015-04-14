@@ -51,10 +51,11 @@ public class Blog implements Serializable{
 	@Override
 	public String toString(){
 		String temp;
-		temp = user.toString();
+		temp = user.toString() + '\n';
 		for(int i =0; i<allPosts.size();i++){
-			temp = temp + allPosts.get(i).toString();
+			temp = temp + allPosts.get(i).toString() + '\n';
 		}
+		temp  = temp + '\n';
 		return temp;
 	}
 	
