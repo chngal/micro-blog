@@ -23,14 +23,19 @@ public class BlogClient {
 			
 		){
 			String userInput;
-			out.println("hihi jai ");
+			while((userInput = stdIn.readLine())!=null){
+				
+			
+			out.println(userInput);
+			
+			if(userInput.equals("quit")){
+				break;
+			}
+			System.out.println(in.readLine());
+			
+			}
 			out.close();
-			/*userInput
-			 * 
-			 * 
-			 * 
-			 * 
-			 */
+			
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			System.err.println("Don't know about host"+ IP);
